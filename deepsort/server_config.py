@@ -11,7 +11,6 @@ from os.path import join
 # 配置环境变量，存储于deepsort/.env文件中 (manage.py在外面一层目录)
 load_dotenv('deepsort/.env')
 # Configure deep sort info
-environ['project_root'] = "D:\py_projects\yolo_deepsort_django"
 # key: 'project_root' value: D:\py_projects\yolo_deepsort_django
 # key: 'reid_ckpt' value: deep_sort/deep/checkpoint/ckpt.t7
 print('项目路径', getenv('project_root'))
