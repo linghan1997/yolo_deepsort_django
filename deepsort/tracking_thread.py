@@ -2,6 +2,7 @@ import warnings
 from os import getenv
 import sys
 from os.path import dirname, abspath
+import datetime
 
 sys.path.append(dirname(dirname(abspath(__file__))))
 
@@ -101,14 +102,19 @@ class RealTimeTracking(object):
 
             color = compute_color_for_labels(identity)
 
+            # time info
+            time_text = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            cv2.putText(img, time_text, (0, 30),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (55, 255, 155), 1)
+
             # center point
-            center = (int((x1 + x2) / 2), int((y1 + y2) / 2))
+            center = (int((x1 + x2) / 2), int((y1 + y2) / 2))  # must be int
             cv2.circle(img, center, 1, color, 4)
 
             # box text and bar
             label = '{}{:d}'.format("person", identity)
-            t_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_PLAIN, 2, 2)[0]
+            t_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 1, 2)[0]
             cv2.rectangle(img, (x1, y1), (x2, y2), color, 3)
             cv2.rectangle(img, (x1, y1), (x1 + t_size[0] + 3, y1 + t_size[1] + 4), color, -1)
-            cv2.putText(img, label, (x1, y1 + t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 2, [255, 255, 255], 2)
+            cv2.putText(img, label, (x1, y1 + t_size[1] + 4), cv2.FONT_HERSHEY_SIMPLEX, 1, [255, 255, 255], 2)
         return img
